@@ -15,6 +15,11 @@ build/
 .uv-cache/
 *.log
 .DS_Store
+
+# Node / web UI
+node_modules/
+web/dist/
+
 .claude.md
 .mcp.json
 docs/*

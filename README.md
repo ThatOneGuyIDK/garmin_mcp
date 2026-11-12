@@ -832,13 +832,17 @@ Add the server to your global opencode config at `~/.config/opencode/opencode.js
         "garmin-mcp"
       ],
       "enabled": true,
-      "timeout": 30000
+      "timeout": 120000
     }
   }
 }
 ```
 
-Restart opencode after saving the file. The first `uvx` invocation downloads and caches the package, so the initial startup may take a few seconds.
+Restart opencode after saving the file. The first `uvx` invocation downloads and
+caches the package, so the initial startup may take a few seconds. When running
+from a clone, the first `uv run garmin-mcp` also builds the local package into
+`.venv`, which can take a minute or more; the 120s timeout covers that so the
+connection is not dropped before the server answers.
 
 ### With Docker
 
@@ -1224,3 +1228,15 @@ If you are working from a local checkout or fork:
 ```bash
 uv tool install --python 3.12 --force C:\Users\aresd\Desktop\programacion\garmin_mcp
 ```
+
+## Training Plan UI
+
+The `web/` directory contains a small Vite + React calendar for the 45-week Grindstone 100K build (Nov 16, 2026 – Sep 25, 2027). It shows every long run, back-to-back, and easy day, plus phase summaries and race-day rules, and exports the plan as an `.ics` file.
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+Deploy with Vercel by importing the repo; the root `vercel.json` builds from `web/`. See [`web/README.md`](web/README.md) for details.
