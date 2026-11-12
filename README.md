@@ -1231,7 +1231,7 @@ uv tool install --python 3.12 --force C:\Users\aresd\Desktop\programacion\garmin
 
 ## Training Plan UI
 
-The `web/` directory contains a small Vite + React calendar for the 45-week Grindstone 100K build (Nov 16, 2026 – Sep 25, 2027). It shows every long run, back-to-back, and easy day, plus phase summaries and race-day rules, and exports the plan as an `.ics` file.
+The `web/` directory contains a small Vite + React calendar for the 45-week build (Nov 16, 2026 – Sep 25, 2027). It covers the sub-3:45 Charlottesville Marathon on April 3, 2027, then the Grindstone 100K on September 25, 2027. It shows every long run, back-to-back, and easy day, plus phase summaries and race-day rules for both races, and exports the plan as an `.ics` file.
 
 ```bash
 cd web

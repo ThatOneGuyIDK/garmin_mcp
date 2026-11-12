@@ -3,6 +3,7 @@ import CalendarView from './components/CalendarView'
 import PhasesView from './components/PhasesView'
 import RulesView from './components/RulesView'
 import {
+  MARATHON,
   PLAN_STATS,
   RACE,
   WORKOUTS,
@@ -43,6 +44,7 @@ export default function App() {
     window.history.replaceState(null, '', id === 'calendar' ? '#' : `#${id}`)
   }
   const countdown = Math.max(0, daysUntil(RACE.date))
+  const marathonCountdown = Math.max(0, daysUntil(MARATHON.date))
 
   const next = useMemo(
     () =>
@@ -64,10 +66,20 @@ export default function App() {
             <p className="hero-sub">
               {RACE.location} · {formatLong(RACE.date)} · {RACE.start} start
             </p>
+            <div className="race-strip">
+              <span className="race-pill marathon">
+                <strong>B race</strong> {MARATHON.name} · {formatLong(MARATHON.date)} ·{' '}
+                {MARATHON.goal}
+              </span>
+              <span className="race-pill goal">
+                <strong>A race</strong> {RACE.name} · {formatLong(RACE.date)} · sub-18 h
+              </span>
+            </div>
           </div>
-          <div className="countdown" aria-label={`${countdown} days to race`}>
+          <div className="countdown" aria-label={`${countdown} days to Grindstone`}>
             <span className="countdown-num">{countdown}</span>
-            <span className="countdown-label">days to race</span>
+            <span className="countdown-label">days to Grindstone</span>
+            <span className="countdown-sub">{marathonCountdown} days to Charlottesville</span>
           </div>
         </div>
 

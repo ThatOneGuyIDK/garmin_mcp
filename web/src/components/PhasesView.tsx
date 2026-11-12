@@ -7,11 +7,14 @@ export default function PhasesView() {
       <div className="phases-intro">
         <div>
           <p className="eyebrow">The build</p>
-          <h2>45 weeks, seven phases</h2>
+          <h2>
+            {PLAN_STATS.weeks} weeks, {PHASES.length} phases
+          </h2>
         </div>
         <p className="phases-lede">
           {PLAN_STATS.totalMiles.toLocaleString()} training miles · peak{' '}
-          {PLAN_STATS.peakMiles} mi/week · 11,000 ft on race day
+          {PLAN_STATS.peakMiles} mi/week · sub-3:45 marathon on April 3 · 100K on
+          September 25
         </p>
       </div>
 

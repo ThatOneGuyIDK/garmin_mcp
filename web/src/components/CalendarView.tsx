@@ -111,6 +111,12 @@ export default function CalendarView() {
     setSelected(WORKOUT_BY_DATE.has(today) ? today : null)
   }
 
+  const goMarathon = () => {
+    const idx = MONTHS.findIndex((m) => m.key === '2027-04')
+    if (idx >= 0) setMonthIdx(idx)
+    setSelected('2027-04-03')
+  }
+
   const goRace = () => {
     const idx = MONTHS.findIndex((m) => m.key === '2027-09')
     if (idx >= 0) setMonthIdx(idx)
@@ -146,6 +152,9 @@ export default function CalendarView() {
           <div className="toolbar-actions">
             <button className="ghost-btn" onClick={goToday}>
               Today
+            </button>
+            <button className="ghost-btn" onClick={goMarathon}>
+              Marathon
             </button>
             <button className="ghost-btn" onClick={goRace}>
               Race week
@@ -281,7 +290,9 @@ function WorkoutCard({
           <div className="week-grid">
             <span>Tue · {week.tue} mi</span>
             <span>Thu · {week.thu} mi</span>
-            <span>Sat · {week.race ? 'race' : `${week.long} mi`}</span>
+            <span>
+              Sat · {week.race ? 'race' : week.long ? `${week.long} mi` : 'rest'}
+            </span>
             <span>Sun · {week.sun ? `${week.sun} mi` : 'rest'}</span>
           </div>
           {week.note && <p className="week-note">{week.note}</p>}

@@ -33,6 +33,29 @@ const RULES = [
   },
 ]
 
+const MARATHON_DAY = [
+  {
+    label: 'Goal',
+    value: 'Sub-3:45',
+    body: '8:35/mi average. Even effort, not even pace — Charlottesville is hilly (+2,300 ft).',
+  },
+  {
+    label: 'First 5 mi',
+    value: '8:40–8:45',
+    body: 'Conservative. HR 160–170. Let the field go. Fuel at 30–40 min.',
+  },
+  {
+    label: 'Miles 6–20',
+    value: '8:30–8:35',
+    body: 'Settle into goal pace. HR 170–182. Gel every 35–40 min and drink at every aid station.',
+  },
+  {
+    label: 'Last 10K',
+    value: '8:25–8:35',
+    body: 'If the legs are there, squeeze. If not, hold 8:45 and finish. No hero miles.',
+  },
+]
+
 const RACE_DAY = [
   {
     label: 'Cutoff math',
@@ -78,8 +101,46 @@ export default function RulesView() {
       </div>
 
       <div className="rules-intro race-intro">
-        <p className="eyebrow">September 25, 2027</p>
-        <h2>Race day</h2>
+        <p className="eyebrow">April 3, 2027 · B race</p>
+        <h2>Charlottesville Marathon</h2>
+      </div>
+
+      <div className="race-grid">
+        {MARATHON_DAY.map((r) => (
+          <article key={r.label} className="race-card">
+            <span className="race-label">{r.label}</span>
+            <strong>{r.value}</strong>
+            <p>{r.body}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="race-split">
+        <div>
+          <h3>How to run it</h3>
+          <p>
+            7:00 AM start at Market Street Park. The course is rolling and open
+            to traffic; run the tangents and stay alert. Bank nothing in the
+            first 10K. The race starts at mile 18 — that is where sub-3:45 is
+            won or lost.
+          </p>
+        </div>
+        <div>
+          <h3>Course facts</h3>
+          <ul>
+            <li>26.2 mi · +2,300 ft · hilly</li>
+            <li>~65% roads, 35% paved bike path</li>
+            <li>Open to traffic · 6 h limit</li>
+            <li>Start/finish: Market Street Park</li>
+            <li>Fuel: 60–90 g/h · 500–750 ml/h</li>
+            <li>Goal: 3:44–3:45 · 8:35/mi</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="rules-intro race-intro">
+        <p className="eyebrow">September 25, 2027 · A race</p>
+        <h2>Grindstone race day</h2>
       </div>
 
       <div className="race-grid">
