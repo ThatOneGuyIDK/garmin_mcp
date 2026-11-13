@@ -3,6 +3,7 @@ import CalendarView from './components/CalendarView'
 import PhasesView from './components/PhasesView'
 import RulesView from './components/RulesView'
 import {
+  FIFTY_LONG,
   MARATHON,
   PLAN_STATS,
   RACE,
@@ -17,7 +18,7 @@ type Tab = 'calendar' | 'phases' | 'rules'
 const TABS: { id: Tab; label: string }[] = [
   { id: 'calendar', label: 'Calendar' },
   { id: 'phases', label: 'Phases' },
-  { id: 'rules', label: 'Race day' },
+  { id: 'rules', label: 'Execution' },
 ]
 
 function dayWord(n: number): string {
@@ -44,6 +45,7 @@ export default function App() {
     window.history.replaceState(null, '', id === 'calendar' ? '#' : `#${id}`)
   }
   const countdown = Math.max(0, daysUntil(RACE.date))
+  const fiftyCountdown = Math.max(0, daysUntil(FIFTY_LONG.date))
   const marathonCountdown = Math.max(0, daysUntil(MARATHON.date))
 
   const next = useMemo(
@@ -71,6 +73,10 @@ export default function App() {
                 <strong>B race</strong> {MARATHON.name} · {formatLong(MARATHON.date)} ·{' '}
                 {MARATHON.goal}
               </span>
+              <span className="race-pill fifty">
+                <strong>50M long run</strong> {formatLong(FIFTY_LONG.date)} ·
+                self-supported
+              </span>
               <span className="race-pill goal">
                 <strong>A race</strong> {RACE.name} · {formatLong(RACE.date)} · sub-18 h
               </span>
@@ -80,6 +86,7 @@ export default function App() {
             <span className="countdown-num">{countdown}</span>
             <span className="countdown-label">days to Grindstone</span>
             <span className="countdown-sub">{marathonCountdown} days to Charlottesville</span>
+            <span className="countdown-sub">{fiftyCountdown} days to the self-supported 50</span>
           </div>
         </div>
 

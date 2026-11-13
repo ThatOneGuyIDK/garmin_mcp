@@ -151,6 +151,10 @@ p {
   border-color: rgba(244, 114, 182, 0.32);
 }
 
+.race-pill.fifty {
+  border-color: rgba(52, 211, 153, 0.32);
+}
+
 .race-pill.goal {
   border-color: rgba(245, 185, 66, 0.32);
 }

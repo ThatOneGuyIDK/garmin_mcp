@@ -1,10 +1,10 @@
 # Grindstone 100K — Training Plan UI
 
-A single-page calendar for the 45-week build (Nov 16, 2026 – Sep 25, 2027): the sub-3:45 Charlottesville Marathon on April 3, 2027, then the Grindstone 100K on September 25, 2027.
+A single-page calendar for the 45-week build (Nov 16, 2026 – Sep 25, 2027): the sub-3:45 Charlottesville Marathon on April 3, 2027, a self-supported 50-mile long run on June 5, 2027, then the Grindstone 100K on September 25, 2027.
 
-- **Calendar** — month grid with every long run, back-to-back, and easy day. Click a workout for details and the week summary. Use **Marathon** and **Race week** to jump to each race.
-- **Phases** — the ten blocks, weekly mileage, long-run progression, and vert.
-- **Race day** — execution rules and pacing for both races, plus cutoff math and course facts.
+- **Calendar** — month grid with every long run, back-to-back, and easy day. Click a workout for details and the week summary. Use **Marathon**, **50M run**, and **Grindstone** to jump to key dates.
+- **Phases** — the twelve blocks, weekly mileage, long-run progression, and vert.
+- **Execution** — training rules, marathon pacing, self-supported 50 guidance, and Grindstone race-day execution.
 - **Download .ics** — import the whole plan into Google Calendar, Apple Calendar, or Outlook.
 
 ## Local development
@@ -70,6 +70,6 @@ All dates and workouts live in [`src/data/plan.ts`](src/data/plan.ts). Each week
 { phase: 'marathon', long: 20, sun: 8, tue: 9, thu: 4, tueType: 'mp', longType: 'mp', note: 'Last 6 mi at marathon pace.' }
 ```
 
-`tueType` controls the Tuesday quality session (`easy`, `mp`, `tempo`, `hills`, `strides`, `sharp`) and `longType` controls the Saturday long-run description (`trail`, `easy`, `mp`, `hills`, `recovery`). A race week sets `race: true` plus `raceType: 'marathon'` or `'grindstone'`.
+`tueType` controls the Tuesday quality session (`easy`, `mp`, `tempo`, `hills`, `strides`, `sharp`) and `longType` controls the Saturday long-run description (`trail`, `easy`, `mp`, `hills`, `recovery`, `fifty`). A race week sets `race: true` plus `raceType: 'marathon'` or `'grindstone'`. The self-supported 50 on June 5 is a normal `long` workout with `longType: 'fifty'` and `longTitle: 'Self-supported 50'`; it is not a race.
 
-Week starts are generated from `PLAN_START` (Monday, Nov 16, 2026), so changing a spec re-flows the calendar automatically. Race details (date, start time, course, goal) are in the `MARATHON` and `RACE` constants.
+Week starts are generated from `PLAN_START` (Monday, Nov 16, 2026), so changing a spec re-flows the calendar automatically. Race details (date, start time, course, goal) are in the `MARATHON`, `FIFTY_LONG`, and `RACE` constants.

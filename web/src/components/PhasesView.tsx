@@ -13,8 +13,8 @@ export default function PhasesView() {
         </div>
         <p className="phases-lede">
           {PLAN_STATS.totalMiles.toLocaleString()} training miles · peak{' '}
-          {PLAN_STATS.peakMiles} mi/week · sub-3:45 marathon on April 3 · 100K on
-          September 25
+          {PLAN_STATS.peakMiles} mi/week · sub-3:45 marathon Apr 3 · self-supported
+          50 Jun 5 · 100K Sep 25
         </p>
       </div>
 

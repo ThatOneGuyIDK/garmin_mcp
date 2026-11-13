@@ -1,11 +1,11 @@
 const RULES = [
   {
     title: 'The 80/20 rule',
-    body: 'About 80% of your running at 135–160 bpm, 20% hard. If you are unsure which one a run is, it is easy.',
+    body: 'About 80% of your running at 135–155 bpm, 20% hard. If you are unsure which one a run is, it is easy.',
   },
   {
     title: 'Long run rules',
-    body: 'HR 145–160. 9:1 run/walk from the start. Even or negative split. If HR drifts more than 8 bpm in the second half, walk more.',
+    body: 'HR 135–155 on easy long runs, 140–160 on trail. No pace goal. 9:1 run/walk from the start. If HR drifts more than 8 bpm in the second half, walk more.',
   },
   {
     title: 'Back-to-backs',
@@ -53,6 +53,29 @@ const MARATHON_DAY = [
     label: 'Last 10K',
     value: '8:25–8:35',
     body: 'If the legs are there, squeeze. If not, hold 8:45 and finish. No hero miles.',
+  },
+]
+
+const SELF_50_DAY = [
+  {
+    label: 'Goal',
+    value: 'Time on feet',
+    body: 'A training run, not a race. 50 miles at low HR, practice Grindstone fueling, and finish with something left.',
+  },
+  {
+    label: 'Start',
+    value: '13:00–14:00/mi',
+    body: 'Start before dawn. Run/walk from mile 1. HR 135–160. Do not chase pace — the watch is for HR, not splits.',
+  },
+  {
+    label: 'Loops',
+    value: '5 × 10 mi',
+    body: 'Return to your base every 10 miles. Refill, eat, change socks, and fix hot spots before they become blisters.',
+  },
+  {
+    label: 'Last 10 mi',
+    value: 'Hold back',
+    body: 'If you feel good at 40, stay patient. Finish with something left for Grindstone. No hero miles.',
   },
 ]
 
@@ -134,6 +157,44 @@ export default function RulesView() {
             <li>Start/finish: Market Street Park</li>
             <li>Fuel: 60–90 g/h · 500–750 ml/h</li>
             <li>Goal: 3:44–3:45 · 8:35/mi</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="rules-intro race-intro">
+        <p className="eyebrow">June 5, 2027 · self-supported long run</p>
+        <h2>Self-supported 50</h2>
+      </div>
+
+      <div className="race-grid">
+        {SELF_50_DAY.map((r) => (
+          <article key={r.label} className="race-card">
+            <span className="race-label">{r.label}</span>
+            <strong>{r.value}</strong>
+            <p>{r.body}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="race-split">
+        <div>
+          <h3>How to run it</h3>
+          <p>
+            Pick a 10-mile loop from home or a trailhead with easy access to your
+            car. Start before dawn, keep HR under 160, and treat every loop as a
+            reset: drink, eat, and fix your feet. The point is 50 miles of
+            low-HR time on feet plus a full fueling rehearsal — not a fast 50.
+          </p>
+        </div>
+        <div>
+          <h3>Run facts</h3>
+          <ul>
+            <li>50 mi · self-supported · no cutoff</li>
+            <li>5 × 10-mile loops from your base</li>
+            <li>HR 135–160 · run/walk from mile 1</li>
+            <li>Aid at the base every 10 mi</li>
+            <li>Fuel: 60–90 g/h · 500–750 ml/h</li>
+            <li>Goal: finish with something left</li>
           </ul>
         </div>
       </div>

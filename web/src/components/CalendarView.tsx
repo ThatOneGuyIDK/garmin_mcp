@@ -117,6 +117,12 @@ export default function CalendarView() {
     setSelected('2027-04-03')
   }
 
+  const goFifty = () => {
+    const idx = MONTHS.findIndex((m) => m.key === '2027-06')
+    if (idx >= 0) setMonthIdx(idx)
+    setSelected('2027-06-05')
+  }
+
   const goRace = () => {
     const idx = MONTHS.findIndex((m) => m.key === '2027-09')
     if (idx >= 0) setMonthIdx(idx)
@@ -156,8 +162,11 @@ export default function CalendarView() {
             <button className="ghost-btn" onClick={goMarathon}>
               Marathon
             </button>
+            <button className="ghost-btn" onClick={goFifty}>
+              50M run
+            </button>
             <button className="ghost-btn" onClick={goRace}>
-              Race week
+              Grindstone
             </button>
             <button className="ghost-btn accent-btn" onClick={downloadICS}>
               Download .ics

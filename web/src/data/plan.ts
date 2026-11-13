@@ -5,6 +5,8 @@ export type PhaseId =
   | 'marathonTaper'
   | 'recovery'
   | 'trail'
+  | 'fiftyBuild'
+  | 'fiftyRecovery'
   | 'specific'
   | 'peak'
   | 'taper'
@@ -25,7 +27,7 @@ export type Phase = {
 }
 
 export type Quality = 'easy' | 'mp' | 'tempo' | 'hills' | 'strides' | 'sharp'
-export type LongType = 'trail' | 'easy' | 'mp' | 'hills' | 'recovery'
+export type LongType = 'trail' | 'easy' | 'mp' | 'hills' | 'recovery' | 'fifty'
 
 export type Week = {
   index: number
@@ -42,6 +44,7 @@ export type Week = {
   raceType?: 'grindstone' | 'marathon'
   tueType: Quality
   longType: LongType
+  longTitle?: string
   note?: string
 }
 
@@ -65,6 +68,8 @@ export const RACE = {
   vertFt: 11000,
   cutoffHours: 18,
   location: 'Natural Chimneys Park, Mount Solon, VA',
+  detail:
+    '6:00 AM start · 62.1 mi · 11,000 ft · 18 h cutoff · finish by midnight',
 }
 
 export const MARATHON = {
@@ -82,6 +87,14 @@ export const MARATHON = {
 
 export const PLAN_START = '2026-11-16'
 
+export const FIFTY_LONG = {
+  name: 'Self-supported 50',
+  date: '2027-06-05',
+  distanceMi: 50,
+  detail:
+    'Self-supported · 5 × 10 mi loops · HR 135–160 · run/walk · fuel 60–90 g/h',
+}
+
 export const PHASES: Phase[] = [
   {
     id: 'reset',
@@ -90,15 +103,16 @@ export const PHASES: Phase[] = [
     start: '2026-11-16',
     end: '2026-12-13',
     weeks: 4,
-    weeklyMiles: '15–25 mi',
-    longRun: '4–12 mi',
-    vert: '500–1,500 ft',
+    weeklyMiles: '15–30 mi',
+    longRun: '4–16 mi',
+    vert: '500–2,000 ft',
     focus: 'Recover, fix the intensity, rebuild consistency.',
     bullets: [
       'No long run for 10 days after the half marathon.',
-      'Everything at 135–160 bpm. No hard efforts.',
+      'First long run back: 14 mi on Nov 28 — easy, HR 135–155.',
+      'Everything at 135–155 bpm. No hard efforts.',
       'Strength 2×/week: calves, hips, core.',
-      'Build from 19 to 25 mi/week.',
+      'Build from 15 to 30 mi/week.',
     ],
   },
   {
@@ -108,12 +122,13 @@ export const PHASES: Phase[] = [
     start: '2026-12-14',
     end: '2027-01-10',
     weeks: 4,
-    weeklyMiles: '20–30 mi',
-    longRun: '11–15 mi',
-    vert: '1,000–2,000 ft',
+    weeklyMiles: '28–36 mi',
+    longRun: '16–20 mi',
+    vert: '1,000–2,500 ft',
     focus: 'Aerobic base and hills before the marathon block.',
     bullets: [
       'Strides 2×/week; hill repeats every other week.',
+      'Long runs 18 → 20 mi, all at HR 135–155.',
       'Keep easy days genuinely easy — this is where the base is built.',
       'Cutback every 4th week.',
       'Arrive at the marathon block healthy, not fit.',
@@ -126,13 +141,13 @@ export const PHASES: Phase[] = [
     start: '2027-01-11',
     end: '2027-03-21',
     weeks: 10,
-    weeklyMiles: '26–44 mi',
+    weeklyMiles: '28–44 mi',
     longRun: '14–22 mi',
     vert: '1,500–3,000 ft',
     focus: 'Sub-3:45 marathon — threshold volume, marathon pace, even effort.',
     bullets: [
       'Tuesday is the quality day: marathon pace, tempo, or hills.',
-      'Long runs build 14 → 22 mi; the last 4–8 mi at 8:35–8:45 on key weeks.',
+      'Long runs build 18 → 22 mi; the last 4–8 mi at 8:35–8:45 on key weeks.',
       'Fuel 60–90 g/h on every long run. Practice the race breakfast.',
       'Sub-3:45 = 8:35/mi. Even effort, not even pace — Charlottesville is hilly.',
       'No trail-specific work yet; the 100K block starts after April 3.',
@@ -145,7 +160,7 @@ export const PHASES: Phase[] = [
     start: '2027-03-22',
     end: '2027-04-04',
     weeks: 2,
-    weeklyMiles: '26 → 18 mi',
+    weeklyMiles: '26 → 32 mi (race week)',
     longRun: '12 → race',
     vert: '1,000 → 500 ft',
     focus: 'Sharpen and freshen for Charlottesville.',
@@ -181,33 +196,71 @@ export const PHASES: Phase[] = [
     start: '2027-04-19',
     end: '2027-05-23',
     weeks: 5,
-    weeklyMiles: '29–46 mi',
-    longRun: '14–22 mi',
-    vert: '2,000–4,000 ft',
-    focus: 'Time on trail, technical descents, and course recon.',
+    weeklyMiles: '29–49 mi',
+    longRun: '14–30 mi',
+    vert: '2,000–4,500 ft',
+    focus: 'Time on trail, technical descents, and building toward the 50.',
     bullets: [
       'Weekly back-to-backs: Sat long, Sun ~60%.',
       'Power-hike grades above 15%.',
+      'Long runs build 14 → 30 mi, all at HR 135–155.',
+      'Big 30 + 18 mi weekend before the 50M build.',
       'First course-recon weekend on Narrow Back / Wolf Ridge.',
-      'No 50K this spring — the marathon was the tune-up.',
+    ],
+  },
+  {
+    id: 'fiftyBuild',
+    name: '50M build & 50',
+    color: '#eab308',
+    start: '2027-05-24',
+    end: '2027-06-06',
+    weeks: 2,
+    weeklyMiles: '34 → 56 mi (50M week)',
+    longRun: '20 → 50 mi',
+    vert: '1,500 → 3,000 ft',
+    focus: 'Taper, then run a self-supported 50-miler at low HR.',
+    bullets: [
+      'Self-supported 50 mi — Sat Jun 5, 2027. No race, no crew.',
+      'Use 5 × 10-mile loops with aid; start at 13:00–14:00/mi.',
+      'HR 135–160, run/walk from mile 1; fuel 60–90 g/h.',
+      'Time-on-feet rehearsal for Grindstone, not a race effort.',
+      'If you feel good at 40, hold back and finish with something left.',
+    ],
+  },
+  {
+    id: 'fiftyRecovery',
+    name: '50M recovery',
+    color: '#94a3b8',
+    start: '2027-06-07',
+    end: '2027-06-20',
+    weeks: 2,
+    weeklyMiles: '9–22 mi',
+    longRun: '0–10 mi',
+    vert: '0–1,000 ft',
+    focus: 'Absorb the 50, then resume.',
+    bullets: [
+      'No long run for 10 days after the 50.',
+      'Easy 135–150 bpm; walk 10 minutes daily.',
+      'Eat and sleep aggressively; reassess before the specific block.',
+      'Do not rush the return — Grindstone is still 15 weeks out.',
     ],
   },
   {
     id: 'specific',
     name: 'Specific',
     color: '#fbbf24',
-    start: '2027-05-24',
+    start: '2027-06-21',
     end: '2027-07-04',
-    weeks: 6,
-    weeklyMiles: '37–53 mi',
-    longRun: '22–25 mi',
+    weeks: 2,
+    weeklyMiles: '44–49 mi',
+    longRun: '22–24 mi',
     vert: '4,000–6,000 ft',
-    focus: 'Night running, heat, poles, and a 50-mile tune-up.',
+    focus: 'Night running, heat, poles, and final course recon.',
     bullets: [
-      'One night run per month; one 4–6 h night run.',
-      'Afternoon heat runs in June and July.',
+      'One night run; one 4–6 h night run.',
+      'Afternoon heat runs in late June and July.',
       'Poles on all long runs.',
-      'Optional 50-mile tune-up in late June or early July.',
+      'The self-supported 50 was the tune-up; now sharpen for the peak block.',
     ],
   },
   {
@@ -278,32 +331,33 @@ type WeekSpec = {
   note?: string
   tueType?: Quality
   longType?: LongType
+  longTitle?: string
 }
 
 const SPECS: WeekSpec[] = [
-  // Reset — recover from the half, all easy
+  // Reset — recover from the half, then rebuild long-run volume at low HR
   { phase: 'reset', long: 4, sun: 4, tue: 4, thu: 3, note: 'Recovery week. No long run for 10 days after the half.', tueType: 'easy', longType: 'recovery' },
-  { phase: 'reset', long: 10, sun: 5, tue: 4, thu: 3, tueType: 'easy', longType: 'easy' },
-  { phase: 'reset', long: 12, sun: 5, tue: 5, thu: 3, tueType: 'strides', longType: 'easy' },
-  { phase: 'reset', long: 9, sun: 4, tue: 4, thu: 2, cutback: true, tueType: 'easy', longType: 'easy' },
+  { phase: 'reset', long: 14, sun: 5, tue: 4, thu: 3, note: 'First long run back: 14 mi, all easy.', tueType: 'easy', longType: 'easy' },
+  { phase: 'reset', long: 16, sun: 6, tue: 5, thu: 3, tueType: 'strides', longType: 'easy' },
+  { phase: 'reset', long: 14, sun: 5, tue: 4, thu: 3, cutback: true, tueType: 'easy', longType: 'easy' },
 
   // Base — short aerobic block before marathon training
-  { phase: 'base', long: 12, sun: 5, tue: 5, thu: 3, tueType: 'strides', longType: 'easy' },
-  { phase: 'base', long: 14, sun: 5, tue: 5, thu: 3, tueType: 'hills', longType: 'hills' },
-  { phase: 'base', long: 15, sun: 6, tue: 6, thu: 3, tueType: 'strides', longType: 'easy' },
-  { phase: 'base', long: 11, sun: 4, tue: 4, thu: 2, cutback: true, tueType: 'easy', longType: 'easy' },
+  { phase: 'base', long: 18, sun: 6, tue: 5, thu: 3, tueType: 'strides', longType: 'easy' },
+  { phase: 'base', long: 20, sun: 7, tue: 6, thu: 3, tueType: 'hills', longType: 'hills' },
+  { phase: 'base', long: 16, sun: 5, tue: 4, thu: 3, cutback: true, tueType: 'easy', longType: 'easy' },
+  { phase: 'base', long: 20, sun: 7, tue: 6, thu: 3, tueType: 'hills', longType: 'hills' },
 
   // Marathon build — 10 weeks to Charlottesville, sub-3:45
-  { phase: 'marathon', long: 14, sun: 5, tue: 5, thu: 2, note: 'Marathon block starts. Tuesday quality begins.', tueType: 'mp', longType: 'easy' },
+  { phase: 'marathon', long: 18, sun: 6, tue: 5, thu: 3, note: 'Marathon block starts. Tuesday quality begins.', tueType: 'mp', longType: 'easy' },
   { phase: 'marathon', long: 16, sun: 6, tue: 6, thu: 3, tueType: 'hills', longType: 'hills' },
   { phase: 'marathon', long: 18, sun: 7, tue: 8, thu: 4, note: 'Last 4 mi at marathon pace.', tueType: 'mp', longType: 'mp' },
-  { phase: 'marathon', long: 13, sun: 5, tue: 6, thu: 3, cutback: true, tueType: 'tempo', longType: 'easy' },
-  { phase: 'marathon', long: 19, sun: 7, tue: 8, thu: 4, tueType: 'hills', longType: 'hills' },
-  { phase: 'marathon', long: 20, sun: 8, tue: 9, thu: 4, note: 'Last 6 mi at marathon pace.', tueType: 'mp', longType: 'mp' },
-  { phase: 'marathon', long: 21, sun: 8, tue: 9, thu: 4, tueType: 'tempo', longType: 'easy' },
-  { phase: 'marathon', long: 15, sun: 6, tue: 7, thu: 3, cutback: true, tueType: 'mp', longType: 'easy' },
+  { phase: 'marathon', long: 14, sun: 5, tue: 6, thu: 3, cutback: true, tueType: 'tempo', longType: 'easy' },
+  { phase: 'marathon', long: 20, sun: 7, tue: 8, thu: 4, tueType: 'hills', longType: 'hills' },
+  { phase: 'marathon', long: 22, sun: 8, tue: 9, thu: 4, note: 'Last 6 mi at marathon pace.', tueType: 'mp', longType: 'mp' },
+  { phase: 'marathon', long: 16, sun: 6, tue: 7, thu: 3, cutback: true, tueType: 'tempo', longType: 'easy' },
   { phase: 'marathon', long: 22, sun: 8, tue: 10, thu: 4, note: 'Peak long run. Last 8 mi at marathon pace.', tueType: 'hills', longType: 'mp' },
-  { phase: 'marathon', long: 16, sun: 6, tue: 8, thu: 4, note: 'Last long run. 6 mi at marathon pace, then shut it down.', tueType: 'sharp', longType: 'mp' },
+  { phase: 'marathon', long: 18, sun: 6, tue: 8, thu: 4, note: '6 mi at marathon pace, then shut it down.', tueType: 'sharp', longType: 'mp' },
+  { phase: 'marathon', long: 16, sun: 6, tue: 7, thu: 3, note: 'Last long run — 16 mi easy. Cutback before the taper.', tueType: 'sharp', longType: 'easy' },
 
   // Marathon taper — two weeks
   { phase: 'marathonTaper', long: 12, sun: 5, tue: 6, thu: 3, note: 'Taper. Keep the legs sharp, not tired.', tueType: 'sharp', longType: 'easy' },
@@ -313,20 +367,24 @@ const SPECS: WeekSpec[] = [
   { phase: 'recovery', long: 0, sun: 4, tue: 3, thu: 2, note: 'No long run. Easy walks + short jogs.', tueType: 'easy', longType: 'recovery' },
   { phase: 'recovery', long: 8, sun: 5, tue: 4, thu: 3, note: 'First long-ish run, all easy.', tueType: 'easy', longType: 'recovery' },
 
-  // Trail build — 5 weeks
+  // Trail build — 5 weeks, build to a 48-mile weekend
   { phase: 'trail', long: 14, sun: 6, tue: 5, thu: 4, cutback: true, note: 'Back on trail. Rebuild volume.', tueType: 'hills', longType: 'trail' },
-  { phase: 'trail', long: 20, sun: 11, tue: 7, thu: 4, tueType: 'hills', longType: 'trail' },
-  { phase: 'trail', long: 21, sun: 11, tue: 7, thu: 5, tueType: 'strides', longType: 'trail' },
-  { phase: 'trail', long: 22, sun: 12, tue: 7, thu: 5, note: 'Course recon weekend.', tueType: 'hills', longType: 'trail' },
-  { phase: 'trail', long: 16, sun: 8, tue: 6, thu: 4, cutback: true, tueType: 'easy', longType: 'trail' },
+  { phase: 'trail', long: 18, sun: 8, tue: 6, thu: 4, tueType: 'hills', longType: 'trail' },
+  { phase: 'trail', long: 22, sun: 10, tue: 7, thu: 5, tueType: 'strides', longType: 'trail' },
+  { phase: 'trail', long: 26, sun: 12, tue: 7, thu: 5, note: 'Course recon weekend.', tueType: 'hills', longType: 'trail' },
+  { phase: 'trail', long: 30, sun: 18, tue: 7, thu: 5, note: '48-mile weekend: 30 Sat + 18 Sun. The 50-mile rehearsal.', tueType: 'hills', longType: 'trail' },
 
-  // Specific — 6 weeks
+  // 50M build — taper, then the self-supported 50
+  { phase: 'fiftyBuild', long: 20, sun: 6, tue: 5, thu: 3, note: 'Taper into the 50. Keep the legs fresh.', tueType: 'hills', longType: 'trail' },
+  { phase: 'fiftyBuild', long: FIFTY_LONG.distanceMi, sun: 0, tue: 4, thu: 2, note: 'Self-supported 50 — 5 × 10 mi loops. Low HR, run/walk, practice race fuel.', tueType: 'strides', longType: 'fifty', longTitle: 'Self-supported 50' },
+
+  // 50M recovery — 2 weeks, no long run for 10 days
+  { phase: 'fiftyRecovery', long: 0, sun: 4, tue: 3, thu: 2, note: 'No long run. Easy walks + short jogs.', tueType: 'easy', longType: 'recovery' },
+  { phase: 'fiftyRecovery', long: 10, sun: 5, tue: 4, thu: 3, note: 'First long-ish run, all easy.', tueType: 'easy', longType: 'recovery' },
+
+  // Specific — 2 weeks
   { phase: 'specific', long: 22, sun: 11, tue: 7, thu: 4, note: 'Night run #1.', tueType: 'hills', longType: 'trail' },
-  { phase: 'specific', long: 23, sun: 12, tue: 8, thu: 5, tueType: 'hills', longType: 'trail' },
-  { phase: 'specific', long: 24, sun: 13, tue: 8, thu: 5, tueType: 'hills', longType: 'trail' },
-  { phase: 'specific', long: 18, sun: 9, tue: 6, thu: 4, cutback: true, tueType: 'easy', longType: 'trail' },
-  { phase: 'specific', long: 24, sun: 13, tue: 8, thu: 5, note: 'Heat training begins.', tueType: 'hills', longType: 'trail' },
-  { phase: 'specific', long: 25, sun: 14, tue: 9, thu: 5, note: 'Optional 50-mile tune-up window.', tueType: 'hills', longType: 'trail' },
+  { phase: 'specific', long: 24, sun: 12, tue: 8, thu: 5, note: 'Heat training begins. Final specific block before the peak.', tueType: 'hills', longType: 'trail' },
 
   // Peak — 7 weeks
   { phase: 'peak', long: 26, sun: 14, tue: 9, thu: 5, tueType: 'hills', longType: 'trail' },
@@ -406,6 +464,7 @@ export const WEEKS: Week[] = SPECS.map((spec, i) => {
     raceType: spec.raceType,
     tueType: spec.tueType ?? 'easy',
     longType: spec.longType ?? 'trail',
+    longTitle: spec.longTitle,
     note: spec.note,
   }
 })
@@ -443,11 +502,12 @@ function qualityWorkout(type: Quality, miles: number): { title: string; detail: 
 }
 
 const LONG_DETAIL: Record<LongType, string> = {
-  trail: 'Trail · HR 145–160 · 9:1 run/walk · fuel 60–90 g/h',
-  easy: 'Easy 9:00–9:30/mi · HR 145–160 · fuel 60–90 g/h',
-  mp: 'Easy first half · last 4–8 mi at 8:35–8:45/mi · fuel 60–90 g/h',
-  hills: 'Rolling hills · effort-based · 9:00–9:45/mi · fuel 60–90 g/h',
+  trail: 'Trail · HR 140–160 · 9:1 run/walk · fuel 60–90 g/h',
+  easy: 'HR 135–155 · no pace goal · walk breaks OK · fuel 60–90 g/h',
+  mp: 'Easy first half at HR 135–155 · last 4–8 mi at 8:35–8:45/mi · fuel 60–90 g/h',
+  hills: 'Rolling hills · effort-based · HR 140–160 · fuel 60–90 g/h',
   recovery: 'Easy 135–150 bpm · no pace goal · walk breaks OK',
+  fifty: 'Self-supported 50 · 5 × 10 mi loops · HR 135–160 · run/walk · fuel 60–90 g/h',
 }
 
 const workouts: Workout[] = []
@@ -472,16 +532,12 @@ for (const week of WEEKS) {
   }
 
   if (week.race) {
-    const isMarathon = week.raceType === 'marathon'
-    push(
-      5,
-      'race',
-      week.long,
-      isMarathon ? MARATHON.name : RACE.name,
-      isMarathon ? MARATHON.detail : '6:00 AM start · 62.1 mi · 11,000 ft · 18 h cutoff · finish by midnight',
-    )
+    const race = week.raceType === 'marathon' ? MARATHON : RACE
+    push(5, 'race', week.long, race.name, race.detail)
   } else if (week.long > 0) {
-    const title = week.longType === 'recovery' ? 'Recovery run' : 'Long run'
+    const title =
+      week.longTitle ??
+      (week.longType === 'recovery' ? 'Recovery run' : 'Long run')
     push(5, 'long', week.long, title, LONG_DETAIL[week.longType])
   }
 
