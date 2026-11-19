@@ -4,6 +4,14 @@ const RULES = [
     body: 'About 80% of your running at 135–155 bpm, 20% hard. If you are unsure which one a run is, it is easy.',
   },
   {
+    title: 'Speed work',
+    body: 'Base and marathon blocks: every Tuesday is a quality day, rotating VO2max intervals (6 × 2 min, 4 × 4 min, 10 × 1 min), 3 × 8 min cruise intervals, and hill repeats. Thursday adds 6 × 20 sec strides. In the trail and peak blocks the Tuesday session becomes hill repeats on trail — same stimulus, race-specific.',
+  },
+  {
+    title: 'Hard days are hard, easy days are easy',
+    body: 'Never stack the Tuesday session onto a tired weekend. If the long run left you wrecked, drop the speed session to strides and move on — one missed VO2max costs nothing.',
+  },
+  {
     title: 'Long run rules',
     body: 'HR 135–155 on easy long runs, 140–160 on trail. No pace goal. 9:1 run/walk from the start. If HR drifts more than 8 bpm in the second half, walk more.',
   },
@@ -36,23 +44,23 @@ const RULES = [
 const MARATHON_DAY = [
   {
     label: 'Goal',
-    value: 'Sub-3:45',
-    body: '8:35/mi average. Even effort, not even pace — Charlottesville is hilly (+2,300 ft).',
+    value: 'Sub-3:30',
+    body: '8:00/mi average. Even effort, not even pace — Charlottesville is hilly (+2,300 ft).',
   },
   {
     label: 'First 5 mi',
-    value: '8:40–8:45',
+    value: '8:05–8:10',
     body: 'Conservative. HR 160–170. Let the field go. Fuel at 30–40 min.',
   },
   {
     label: 'Miles 6–20',
-    value: '8:30–8:35',
-    body: 'Settle into goal pace. HR 170–182. Gel every 35–40 min and drink at every aid station.',
+    value: '7:55–8:00',
+    body: 'Settle into goal pace. Gel every 35–40 min and drink at every aid station.',
   },
   {
     label: 'Last 10K',
-    value: '8:25–8:35',
-    body: 'If the legs are there, squeeze. If not, hold 8:45 and finish. No hero miles.',
+    value: '7:45–7:55',
+    body: 'If the legs are there, squeeze. If not, hold 8:00 and finish. No hero miles.',
   },
 ]
 
@@ -144,7 +152,7 @@ export default function RulesView() {
           <p>
             7:00 AM start at Market Street Park. The course is rolling and open
             to traffic; run the tangents and stay alert. Bank nothing in the
-            first 10K. The race starts at mile 18 — that is where sub-3:45 is
+            first 10K. The race starts at mile 18 — that is where sub-3:30 is
             won or lost.
           </p>
         </div>
@@ -156,7 +164,7 @@ export default function RulesView() {
             <li>Open to traffic · 6 h limit</li>
             <li>Start/finish: Market Street Park</li>
             <li>Fuel: 60–90 g/h · 500–750 ml/h</li>
-            <li>Goal: 3:44–3:45 · 8:35/mi</li>
+            <li>Goal: 3:29–3:30 · 8:00/mi</li>
           </ul>
         </div>
       </div>

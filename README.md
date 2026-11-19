@@ -1231,7 +1231,7 @@ uv tool install --python 3.12 --force C:\Users\aresd\Desktop\programacion\garmin
 
 ## Training Plan UI
 
-The `web/` directory contains a small Vite + React calendar for the 45-week build (Nov 16, 2026 – Sep 25, 2027). It covers the sub-3:45 Charlottesville Marathon on April 3, 2027, then the Grindstone 100K on September 25, 2027. It shows every long run, back-to-back, and easy day, plus phase summaries and race-day rules for both races, and exports the plan as an `.ics` file.
+The `web/` directory contains a small Vite + React calendar for the 45-week build (Nov 16, 2026 – Sep 25, 2027). It covers the sub-3:30 Charlottesville Marathon on April 3, 2027, a self-supported 50-mile long run on June 5, 2027, then the Grindstone 100K on September 25, 2027. It shows every long run, back-to-back, and easy day, plus phase summaries and execution guidance for the marathon, the self-supported 50, and Grindstone, and exports the plan as an `.ics` file.
 
 ```bash
 cd web
@@ -1240,3 +1240,47 @@ npm run dev
 ```
 
 Deploy with Vercel by importing the repo; the root `vercel.json` builds from `web/`. See [`web/README.md`](web/README.md) for details.
+
+## Local Garmin cache (SQLite)
+
+`garmin-sync` pulls Garmin Connect data into a local SQLite database so repeated
+analysis and the dashboard never re-hit the API. Garmin rate-limits (429) and
+temporarily blocks (403) clients that query too aggressively, so every request is
+paced and days that are already cached are skipped.
+
+```bash
+# Backfill the last 90 days, refresh recent days, and export the web snapshot
+uv run garmin-sync --days 90
+
+# One season of history, including lap splits for runs of 12 miles or more
+uv run garmin-sync --since 2025-09-01 --until 2026-11-17 --splits --split-min-miles 12
+
+# Re-download a window that is already cached
+uv run garmin-sync --since 2026-10-01 --full
+
+# Inspect coverage without touching the network
+uv run garmin-sync --status
+```
+
+What lands where:
+
+| Path | Committed | Purpose |
+| --- | --- | --- |
+| `data/garmin.db` | no (git-ignored) | Working SQLite cache: `daily`, `activities`, `activity_splits`, `sync_log`, `meta` |
+| `web/public/data/garmin.json` | yes | Compact snapshot served to the **Data** tab on the static site |
+
+Tables:
+
+- `daily` — steps, calories, floors, resting/min/max HR, stress, SpO2, respiration, body battery, sleep stages, HRV (last night + weekly + status), VO2max, one row per date.
+- `activities` — one row per activity: distance, duration, moving time, average speed, avg/max HR, calories, elevation gain/loss, cadence, training effect, VO2max, location.
+- `activity_splits` — lap splits for runs over the `--split-min-miles` threshold.
+- `sync_log` — every sync run with range, counts, and endpoint errors.
+- `meta` — `last_sync` timestamp.
+
+Incremental behaviour: days already in the database are skipped, except the last
+`--refresh-days` (default 2) which are always re-fetched because Garmin finalizes
+sleep and HRV late. Activities are always refreshed in one call for the whole
+window. VO2max is probed weekly rather than daily to keep the request count down.
+
+The snapshot is small — roughly 1 KB per day — so committing it is cheap and Vercel
+builds stay hermetic. The dashboard reads it with no backend and no credentials.

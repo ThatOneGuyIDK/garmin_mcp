@@ -131,6 +131,36 @@ garmin-mcp-auth
 
 This saves OAuth tokens to `~/.garminconnect` so the MCP server can start without an interactive terminal. Token utilities are in [token_utils.py](src/garmin_mcp/token_utils.py).
 
+## Local Cache — Check It Before Calling Garmin
+
+`src/garmin_mcp/local_store.py` and the `garmin-sync` CLI keep a SQLite copy of
+daily wellness and activity data. Garmin's API rate-limits (429) and blocks (403)
+aggressive clients, so **query the cache first** for historical questions and only
+fall back to live MCP tools when the cache does not cover the date range.
+
+```bash
+uv run garmin-sync --status                 # coverage, no network
+uv run garmin-sync --days 30                # incremental refresh + JSON export
+uv run garmin-sync --since 2025-09-01 --splits
+```
+
+- Database: `data/garmin.db` (git-ignored). Tables: `daily`, `activities`,
+  `activity_splits`, `sync_log`, `meta`.
+- Snapshot: `web/public/data/garmin.json` (committed) feeds the **Data** tab.
+- Incremental: cached days are skipped; the last 2 days always refresh because
+  Garmin finalizes sleep and HRV late. VO2max is probed weekly.
+
+Example ad-hoc query:
+
+```python
+from garmin_mcp.local_store import connect
+conn = connect("data/garmin.db")
+rows = conn.execute(
+    "SELECT date, distance_m/1609.344 AS miles, avg_hr FROM activities "
+    "WHERE type LIKE '%run%' AND date >= '2026-09-01' ORDER BY date"
+).fetchall()
+```
+
 ## Development Guidelines
 
 ### Adding a New Tool

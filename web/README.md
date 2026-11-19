@@ -1,11 +1,27 @@
 # Grindstone 100K — Training Plan UI
 
-A single-page calendar for the 45-week build (Nov 16, 2026 – Sep 25, 2027): the sub-3:45 Charlottesville Marathon on April 3, 2027, a self-supported 50-mile long run on June 5, 2027, then the Grindstone 100K on September 25, 2027.
+A single-page calendar for the 45-week build (Nov 16, 2026 – Sep 25, 2027): the sub-3:30 Charlottesville Marathon on April 3, 2027, a self-supported 50-mile long run on June 5, 2027, then the Grindstone 100K on September 25, 2027.
 
 - **Calendar** — month grid with every long run, back-to-back, and easy day. Click a workout for details and the week summary. Use **Marathon**, **50M run**, and **Grindstone** to jump to key dates.
+- **Data** — dashboard built from the local Garmin cache: weekly planned vs actual mileage, pace-vs-heart-rate scatter, long-run progression, resting HR / HRV / sleep / body battery trends, and recent activities with splits.
 - **Phases** — the twelve blocks, weekly mileage, long-run progression, and vert.
 - **Execution** — training rules, marathon pacing, self-supported 50 guidance, and Grindstone race-day execution.
 - **Download .ics** — import the whole plan into Google Calendar, Apple Calendar, or Outlook.
+
+## Garmin data
+
+The **Data** tab reads `public/data/garmin.json` and never calls Garmin. Generate
+or refresh that snapshot from the repo root:
+
+```bash
+uv run garmin-sync --days 30          # incremental; skips days already cached
+uv run garmin-sync --days 400 --splits --split-min-miles 12
+uv run garmin-sync --status           # what is cached, no network
+```
+
+The SQLite working copy lives at `data/garmin.db` (git-ignored). The JSON snapshot
+is committed so the deployed site works with no backend. Until a snapshot exists
+the tab shows the sync command instead of charts.
 
 ## Local development
 

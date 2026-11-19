@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import CalendarView from './components/CalendarView'
+import DashboardView from './components/DashboardView'
 import PhasesView from './components/PhasesView'
 import RulesView from './components/RulesView'
 import {
@@ -13,10 +14,11 @@ import {
   todayISO,
 } from './data/plan'
 
-type Tab = 'calendar' | 'phases' | 'rules'
+type Tab = 'calendar' | 'dashboard' | 'phases' | 'rules'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'calendar', label: 'Calendar' },
+  { id: 'dashboard', label: 'Data' },
   { id: 'phases', label: 'Phases' },
   { id: 'rules', label: 'Execution' },
 ]
@@ -27,7 +29,7 @@ function dayWord(n: number): string {
 
 function tabFromHash(): Tab {
   const hash = window.location.hash.replace('#', '')
-  return hash === 'phases' || hash === 'rules' ? hash : 'calendar'
+  return hash === 'phases' || hash === 'rules' || hash === 'dashboard' ? hash : 'calendar'
 }
 
 export default function App() {
@@ -126,6 +128,7 @@ export default function App() {
 
       <main>
         {tab === 'calendar' && <CalendarView />}
+        {tab === 'dashboard' && <DashboardView />}
         {tab === 'phases' && <PhasesView />}
         {tab === 'rules' && <RulesView />}
       </main>
